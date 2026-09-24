@@ -1,6 +1,5 @@
 from flask import Flask, request, send_file, send_from_directory
 from docxtpl import DocxTemplate
-from docx2pdf import convert
 
 app = Flask(__name__)
 
@@ -19,10 +18,9 @@ def generate_datasheet():
 }
     doc.render(context)
     doc.save("output.docx")
-    convert("output.docx", "output.pdf")
 
     return send_file(
-        "output.pdf",
+        "output.docx",
         as_attachment=True
     )
 if __name__ == "__main__":
