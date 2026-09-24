@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Prepackaging Customer Requirements Checklist</title>
+
+<style>
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6f8;
+    margin:20px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.12);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:20px;
+}
+
+.header-right{
+    text-align:right;
+}
+
+h1{
+    color:#003366;
+    margin-bottom:5px;
+}
+
+.section{
+    margin-top:20px;
+    background:#fafafa;
+    border-left:5px solid #003366;
+    padding:15px;
+}
+
+.section h2{
+    margin-top:0;
+    color:#003366;
+}
+
+.row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:12px;
+}
+
+.field{
+    flex:1;
+    min-width:250px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    box-sizing:border-box;
+}
+
+textarea{
+    min-height:100px;
+}
+
+.checkbox-group{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:12px 40px;
+    margin-top:10px;
+	justify-items:start; /* force left alignment */
+}
+
+.checkbox-group label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+	white-space:nowrap;
+}
+
+.button-bar{
+    text-align:center;
+    margin-top:25px;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    background:#003366;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0058b0;
+}
+
+.hidden{
+    display:none;
+}
+
+.required{
+    color:red;
+}
+
+canvas{
+    border:1px solid #888;
+    background:white;
+}
+
+.footer{
+    margin-top:40px;
+    border-top:1px solid #ccc;
+    padding-top:15px;
+    font-size:12px;
+    color:#444;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<div style="position:absolute; top:30px; left:40px;">
+<img
+src="https://nmis.scot/media/nationalmanufacturinginstitutescotland/newhomepage/xnmis-logo-full-colour-new-HP.png.pagespeed.ic.zq6uISFZpS.webp"
+alt="NMIS Logo"
+width="120">
+</div>
+<div>
+<h1>Pre-packaging Customer Requirements Clarification</h1>
+
+<p>Please complete all applicable fields.</p>
+</div>
+
+<div class="header-right">
+<b>Date:</b>
+<span id="currentDate"></span>
+</div>
+
+</div>
+
+<form id="crForm">
+
+<!-- ================================================= -->
+<!-- CUSTOMER INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Customer Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>
+Company / University Name
+<span class="required">*</span>
+</label>
+<input
+type="text"
+data-question="Customer Company"
+required>
+</div>
+
+<div class="field">
+<label>Device Type</label>
+<input
+type="text"
+data-question="Device Type">
+</div>
+
+<div class="field">
+<label>Wafer Lot ID (Laser Mark)</label>
+<input
+type="text"
+data-question="Wafer Lot ID">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Revision</label>
+<input
+type="text"
+data-question="Revision">
+</div>
+
+<div class="field">
+<label>Target Start Date<span class="required"> *</span></label>
+<input
+type="date"
+id="targetStartDate"
+data-question="Target Start Date">
+</div>
+
+<div class="field">
+<label>Expected Delivery Date<span class="required"> *</span></label>
+<input
+type="date"
+id="expectedDeliveryDate"
+data-question="Expected Delivery Date"
+readonly>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Annual Volume Forecast<span class="required"> *</span></label>
+<input
+type="number"
+min="1"
+step="1"
+data-question="Annual Volume Forecast">
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- PRODUCT INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Product Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Product Lifecycle Phase</label>
+<select data-question="Product Lifecycle Phase">
+<option value="">Select</option>
+<option>Feasibility</option>
+<option>NPI</option>
+<option>MP</option>
+</select>
+</div>
+
+<div class="field">
+<label>Quality Grade Requirement</label>
+
+<select
+id="qualityGrade"
+data-question="Quality Grade Requirement">
+
+<option value="">Select</option>
+<option>Automotive</option>
+<option>Medical</option>
+<option>Aerospace</option>
+<option>Military</option>
+<option>Consumer</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div
+class="field hidden"
+id="otherQualityGradeField">
+
+<label>Specify Other Quality Grade</label>
+
+<input
+type="text"
+data-question="Other Quality Grade">
+
+</div>
+
+</div>
+<p>
+AI integrated Product Quality systems at NMIS NASPIC conform to both ISO 9001 and IATF 16949 requirements. As part of our AI-PQP system, formal procedures is going to be established to ensure that Quality is built into the package design, development and processes.
+</p>
+</div>
+
+<!-- ================================================= -->
+<!-- WAFER INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Wafer Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Substrate Material</label>
+
+<select
+id="substrateMaterial"
+data-question="Substrate Material">
+
+<option value="">Select</option>
+<option>GaN</option>
+<option>SiC</option>
+<option>Si</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div
+class="field hidden"
+id="otherSubstrateField">
+
+<label>Specify Substrate Material</label>
+
+<input
+type="text"
+data-question="Other Substrate Material">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>
+Do you provide the Substrate?
+</label>
+
+<select
+data-question="Provide Substrate">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Wafer Diameter</label>
+
+<select
+id="waferDiameter"
+data-question="Wafer Diameter">
+
+<option value="">Select</option>
+
+<option value="100000">4"</option>
+<option value="125000">5"</option>
+<option value="150000">6"</option>
+<option value="200000">8"</option>
+<option value="300000">12"</option>
+<option value="OTHER">Other</option>
+
+</select>
+
+</div>
+
+<div
+class="field hidden"
+id="otherWaferDiameterField">
+
+<label>Specify Diameter (µm)</label>
+
+<input
+type="number"
+min="1"
+id="customWaferDiameter"
+data-question="Custom Wafer Diameter">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Wafer Thickness (µm)</label>
+
+<input
+type="number"
+min="1"
+max="2000"
+data-question="Wafer Thickness">
+
+</div>
+
+<div class="field">
+
+<label>Thickness Tolerance (µm)</label>
+
+<input
+type="number"
+min="0"
+data-question="Thickness Tolerance">
+
+</div>
+
+<div class="field">
+<label>Wafer Bow / Warpage (µm)</label>
+<input
+type="number"
+min="0"
+max="20"
+placeholder="≤ 20 µm"
+data-question="Wafer Bow / Warpage">
+</div>
+
+</div>
+
+<div class="row">
+<div class="field">
+<label>Has the Wafer Been Electrically Tested?</label>
+<select data-question="Wafer Electrically Tested" id="waferTested">
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+
+</div>
+
+<div class="field" id="inkMarkedField">
+<label>Are Failed Dies Ink Marked?</label>
+<select data-question="Failed Dies Ink Marked">
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+</div>
+
+
+<div class="row">
+<div class="field">
+<label for="WaferPackage">Wafer Package</label>
+<select id="WaferPackage" name="Wafer Package">
+<option value="">Select</option>
+<option value="SF">Sawn wafer with frame</option>
+<option value="ST">Sawn wafer in tray</option>
+<option value="US">Un-sawn wafer</option>
+<option>Other</option>
+</select>
+</div>
+<div class="field hidden" id="otherWaferPackage">
+
+<label>Other Wafer Package</label>
+
+<input type="text" data-question="other Wafer Package">
+
+</div>
+
+</div>
+
+</div>
+<!-- ================================================= -->
+<!-- DIE INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Die Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Die Size X (µm)</label>
+<input
+type="number"
+min="1"
+id="dieSizeX"
+data-question="Die Size X">
+</div>
+
+<div class="field">
+<label>Die Size Y (µm)</label>
+<input
+type="number"
+min="1"
+id="dieSizeY"
+data-question="Die Size Y">
+</div>
+
+<div class="field">
+<label>Die Size Tolerance (µm)</label>
+<input
+type="number"
+min="0"
+data-question="Die Size Tolerance">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Die Corner Shape</label>
+
+<select data-question="Die Corner Shape">
+
+<option value="">Select</option>
+<option>Square</option>
+<option>Chamfer</option>
+<option>Rounded</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Known Fragile Structures Near Edge</label>
+
+<select data-question="Fragile Structures Near Edge">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- BOND PAD INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Bond Pad Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<!--<label>Bond Pad Function</label>-->
+
+<div class="field">
+<label>Number of Bond Pads</label>
+<input
+type="number"
+min="0"
+id="numBondPads"
+data-question="Number of Bond Pads">
+</div>
+ 
+<div id="bondPadContainer"></div>
+
+<style>
+.hidden {
+display: none;
+}
+ 
+.field {
+margin-bottom: 12px;
+}
+ 
+select {
+min-width: 250px;
+}
+</style>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="field">
+<label>Cell Pitch (µm)</label>
+<input
+type="number"
+min="0"
+data-question="Cell Pitch">
+</div>
+
+<div class="field">
+<label>Minimum Pad-To-Die Edge Distance (µm)</label>
+<input
+type="number"
+min="0"
+data-question="Minimum Pad To Die Edge Distance">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Preferred Bond Type</label>
+
+<select data-question="Preferred Bond Type">
+
+<option value="">Select</option>
+<option>Wire Bond</option>
+<option>Clip Bond</option>
+<option>Ribbon Bond</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Other Bond Type</label>
+<input
+type="text"
+data-question="Other Bond Type">
+</div>
+
+<div class="field">
+<label>Maximum Allowable Bond Force (g/N)</label>
+<input
+type="number"
+min="0"
+data-question="Maximum Allowable Bond Force">
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- DICING INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Dicing Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Dicing Method</label>
+
+<select data-question="Dicing Method">
+
+<option value="">Select</option>
+<option>Blade Saw</option>
+<option>Laser Dicing</option>
+<option>Plasma Dicing</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Other Dicing Method</label>
+<input
+type="text"
+data-question="Other Dicing Method">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Scribe Line Width (µm)</label>
+<input
+type="number"
+min="0"
+data-question="Scribe Line Width">
+</div>
+
+<div class="field">
+<label>Maximum Allowed Edge Chipping (µm)</label>
+<input
+type="number"
+min="0"
+data-question="Maximum Allowed Edge Chipping">
+</div>
+
+<div class="field">
+
+<label>Keep-Out Zone Near Scribe Line</label>
+
+<select data-question="Keep-Out Zone">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Dicing Drawing Attached</label>
+
+<select data-question="Dicing Drawing Attached">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+<option>N/A</option>
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Taiko ring removed</label>
+
+<select data-question="Taiko ring removed">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+<option>N/A</option>
+</select>
+
+</div>
+
+</div>
+
+<h3>Scribe Line Structures (the information for packaging process development and yield control purpose only)</h3>
+
+<div class="checkbox-group">
+
+<label>
+<input
+type="checkbox"
+data-question="Global Alignment Mark">
+Global Alignment Mark
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Local Alignment Mark">
+Local Alignment Mark
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Overlay Target">
+Overlay Target
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="CD Target">
+CD Target
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Defect Inspection Pattern">
+Defect Inspection Pattern
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Reticle Mark">
+Reticle Mark
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Layer Mark">
+Layer Mark
+</label>
+
+<label>
+<input
+type="checkbox"
+data-question="Dicing Mark">
+Dicing Mark
+</label>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- ELECTRICAL POLARITY -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Electrical Polarity</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Electrical Polarity Defined</label>
+
+<select data-question="Electrical Polarity Defined">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Top Contact</label>
+
+<select data-question="Top Contact" multiple size="4">
+
+<option value="Gate">Gate</option>
+<option value="Source">Source</option>
+<option value="Kelvin">Kelvin Source</option>
+<option value="Drain">Drain</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Backside Contact</label>
+
+<select data-question="Backside Contact">
+
+<option value="">Select</option>
+<option>Drain</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Max source inductance allowed [nH]</label>
+
+<input
+type="number"
+min="0"
+data-question="Max source inductance">
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Max gate inductance allowed [nH]</label>
+
+<input
+type="number"
+min="0"
+data-question="Max gate inductance">
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Minimum gate resistance required [mohm]</label>
+
+<input
+type="number"
+min="0"
+data-question="Minimum gate resistance required">
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- MOSFET INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>MOSFET Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>MOSFET Type</label>
+
+<select data-question="MOSFET Type">
+
+<option value="">Select</option>
+
+<option>N Channel</option>
+<option>P Channel</option>
+<option>Hybrid</option>
+<option>ESD Protected</option>
+<option>FETKY</option>
+<option>Sense-FET</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Maximum Power Dissipation (W)</label>
+<input
+type="number"
+min="0"
+data-question="Maximum Power Dissipation">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>voltage rating (V)</label>
+<input
+type="number"
+min="0"
+data-question="V_rate">
+
+</div>
+
+<div class="field">
+<label>Current rating (A)</label>
+<input
+type="number"
+min="0"
+data-question="I_rate">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Typical on-state resistance (mohm)</label>
+<input
+type="number"
+min="0"
+data-question="typ Rdson">
+
+</div>
+
+<div class="field">
+<label>Maximum on-state resistance (mohm)</label>
+<input
+type="number"
+min="0"
+data-question="Max Rdson">
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- THERMAL INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Thermal Information</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Target Junction-To-Case Thermal Resistance RθJC (°C/W)</label>
+<input
+type="number"
+step="0.001"
+min="0"
+data-question="RthJC">
+</div>
+
+<div class="field">
+<label>Target Junction-To-Ambient Thermal Resistance RθJA (°C/W)</label>
+<input
+type="number"
+step="0.001"
+min="0"
+data-question="RthJA">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Maximum Junction Temperature TJmax (°C)</label>
+<input
+type="number"
+min="25"
+max="300"
+data-question="TJmax">
+</div>
+
+<div class="field">
+
+<label>Exposed Drain Pad Required</label>
+
+<select data-question="Exposed Drain Pad Required">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Cooling Method</label>
+<select data-question="Cooling Type">
+<option value="">Select Cooling Method</option>
+<option value="Single-Sided Cooling">Single-Sided Cooling</option>
+<option value="Dual-Sided Cooling">Dual-Sided Cooling</option>
+</select>
+</div>
+
+<div class="field">
+
+<label>Heat Sink Interface Required</label>
+
+<select data-question="Heat Sink Interface Required">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Maximum Allowed Package Body Temperature (°C)</label>
+<input
+type="number"
+min="0"
+data-question="Maximum Package Body Temperature">
+</div>
+
+<div class="field">
+<label>Gate Oxide ESD Sensitivity Level</label>
+<input
+<!-- ================================================= -->
+<!-- PACKAGE INFORMATION -->
+<!-- ================================================= -->
+</div>
+</div>
+</div>
+<div class="section">
+
+<h2>Package Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Package Type</label>
+
+<select data-question="Package Type">
+
+<option value="">Select</option>
+
+<option>TO220</option>
+<option>TO247</option>
+<option>DPAK</option>
+<option>D2PAK</option>
+<option>SO8</option>
+<option>Power QFN / LFPAK</option>
+<option>Custom</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Custom / Other Package Type</label>
+<input
+type="text"
+data-question="Custom Package Type">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Target Footprint Pitch & Size</label>
+<input
+type="text"
+data-question="Target Footprint Pitch and Size">
+</div>
+
+<div class="field">
+<label>Through Hole or SMT</label>
+<input
+type="text"
+data-question="Through Hole or SMT">
+</div>
+
+<div class="field">
+
+<label>Marking Side Orientation Defined</label>
+
+<select data-question="Marking Side Orientation Defined">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- DIE ATTACH INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Die Attach Information</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Preferred Die Attach Material</label>
+
+<select data-question="Preferred Die Attach Material">
+
+<option value="">Select</option>
+
+<option>Ag Sinter</option>
+<option>Solder</option>
+<option>Conductive Epoxy</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Preferred Material / Supplier</label>
+<input
+type="text"
+data-question="Preferred Material Supplier">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Maximum Process Temperature Allowed</label>
+<input
+type="number"
+min="0"
+data-question="Maximum Process Temperature">
+</div>
+
+<div class="field">
+<label>Maximum Voiding (%)</label>
+<input
+type="number"
+min="0"
+max="100"
+data-question="Maximum Voiding">
+</div>
+
+<div class="field">
+<label>Die Shear Strength Requirement</label>
+<input
+type="text"
+data-question="Die Shear Strength Requirement">
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+
+<label>Attach Thickness Control Needed</label>
+
+<select data-question="Attach Thickness Control Needed">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- PCM INFORMATION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>PCM Structures</h2>
+
+<div class="row">
+
+<div class="field">
+
+<label>Are there any PCM Structures On Wafer? (the information for packaging process development and yield control purpose only)</label>
+
+<select data-question="PCM Structures Present">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+</div>
+
+</div>
+
+<h3>PCM Categories</h3>
+
+<div class="checkbox-group">
+
+<label><input type="checkbox" data-question="PCM Sensor">
+Transistor (4-Terminal)</label>
+
+<label><input type="checkbox" data-question="PCM Capacitor">
+Capacitor</label>
+
+<label><input type="checkbox" data-question="PCM Resistor">
+Resistor</label>
+
+<label><input type="checkbox" data-question="PCM ESD">
+ESD</label>
+
+<label><input type="checkbox" data-question="PCM Diode">
+Diode</label>
+
+<label><input type="checkbox" data-question="PCM Oscillator">
+Oscillator</label>
+
+<label><input type="checkbox" data-question="PCM Kelvin">
+Kelvin Structure</label>
+
+<label><input type="checkbox" data-question="PCM Van der Pauw">
+Van der Pauw Structure</label>
+
+<label><input type="checkbox" data-question="PCM Comb Serpent">
+Comb-Serpent Structure</label>
+
+<label><input type="checkbox" data-question="PCM EM">
+Electromigration (EM) Sensor</label>
+
+<label><input type="checkbox" data-question="PCM TDDB BTI">
+TDDB/BTI Sensor</label>
+
+<label><input type="checkbox" data-question="PCM Stress Sensor">
+Stress Sensor</label>
+
+</div>
+</div>
+
+<!-- ================================================= -->
+<!-- DOCUMENT UPLOAD SECTION -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Required Documents Upload</h2>
+
+<p>
+Please upload any available documentation.
+File names will be stored in CSV/JSON exports.
+</p>
+
+<div class="row">
+
+<div class="field">
+<label>Wafer Map</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>Die Layout Drawing</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>Main die test result</label>
+<input type="file" multiple>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Package Outline Drawing</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>Bond Pad Coordinate Table</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>Dicing / Street Layout</label>
+<input type="file" multiple>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="field">
+<label>Electrical Polarity Diagram</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>Optical Axis Definition</label>
+<input type="file" multiple>
+</div>
+
+<div class="field">
+<label>PCM measurement result</label>
+<input type="file" multiple>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- SPECIAL NOTES -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Notes / Special Instructions</h2>
+
+<textarea
+data-question="Special Instructions"></textarea>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- APPROVALS -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h1>Customer Approval</h1>
+
+</div>
+
+<!-- ================================================= -->
+<!-- CUSTOMER SIGNATURE -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>Product Manager  Signature</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Name</label>
+<input
+type="text"
+data-question="Product Manager Name">
+</div>
+
+<div class="field">
+<label>Email Address</label>
+<input
+type="email"
+data-question="Product Manager Contact Email">
+</div>
+
+<div class="field">
+<label>Date</label>
+<input type="date" class="today-date" data-question="Product Manager Date">
+</div>
+
+</div>
+
+<p>
+Please sign using mouse, stylus or touchscreen.
+</p>
+
+<!--<canvas id="signaturePad" width="800" height="200"></canvas>-->
+
+<canvas id="signaturePad1" width="800" height="200"></canvas>
+
+<br><br>
+
+<button
+type="button" onclick="clearSignature('signaturePad1')">
+Clear Signature
+</button>
+
+</div>
+
+<div class="section">
+
+<h2>Pre-assembly Manager Signature</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Name</label>
+<input
+type="text"
+data-question="Pre-assembly Manager name">
+</div>
+
+<div class="field">
+<label>Email Address</label>
+<input
+type="email"
+data-question="Pre-assembly Manager Email">
+</div>
+
+<div class="field">
+<label>Date</label>
+<input type="date" class="today-date" data-question="Pre-assembly Manager Date">
+</div>
+
+</div>
+
+<p>
+Please sign using mouse, stylus or touchscreen.
+</p>
+
+<canvas
+id="signaturePad2"
+width="800"
+height="200">
+</canvas>
+
+<br><br>
+
+<button
+type="button" onclick="clearSignature('signaturePad2')">
+Clear Signature
+</button>
+
+</div>
+
+
+<div class="section">
+
+<h2>General Manager Signature</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Name</label>
+<input
+type="text"
+data-question="General Manager Name">
+</div>
+
+<div class="field">
+<label>Email Address</label>
+<input
+type="email"
+data-question="General Manager Email">
+</div>
+
+<div class="field">
+<label>Date</label>
+<input type="date" class="today-date" data-question="General Manager Date">
+</div>
+
+</div>
+
+<p>
+Please sign using mouse, stylus or touchscreen.
+</p>
+
+<canvas
+id="signaturePad3"
+width="800"
+height="200">
+</canvas>
+
+<br><br>
+
+<button type="button" onclick="clearSignature('signaturePad3')">Clear Signature</button>
+
+</div>
+
+<!-- ================================================= -->
+<!-- EXPORT BUTTONS -->
+<!-- ================================================= -->
+
+<div class="button-bar">
+
+<button
+type="button"
+onclick="downloadCSV()">
+Download CSV
+</button>
+
+<button
+type="button"
+onclick="downloadJSON()">
+Download JSON
+</button>
+
+<button
+type="button"
+onclick="validateAndSubmit()">
+Validate Form
+</button>
+
+<button
+type="button"
+onclick="window.print()">
+Print
+</button>
+
+<button
+type="button"
+onclick="generateDatasheet()">
+Generate Datasheet
+</button>
+
+</div>
+
+<!-- ================================================= -->
+<!-- PRIVACY DISCLAIMER -->
+<!-- ================================================= -->
+
+<div class="footer">
+
+<h3>Privacy Notice</h3>
+
+<p>
+
+The information submitted through this checklist
+will be used solely for product packaging feasibility
+assessment, process development, qualification planning,
+manufacturing preparation, quality review,
+procurement activities and yield improvement programs.
+
+</p>
+
+<p>
+
+Any uploaded drawings, wafer information,
+PCM structures, package specifications,
+electrical data, manufacturing information
+and supporting documentation will be treated as
+confidential information and shared only with
+authorized personnel involved in engineering,
+quality, manufacturing, procurement and
+program management activities.
+
+</p>
+
+<p>
+
+By submitting this form, the customer confirms
+that the information provided is accurate
+to the best of their knowledge and
+that they are authorized to share the
+supplied technical information.
+
+</p>
+
+</div>
+
+</form>
+
+</div>
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+/* Current Date */
+
+const today = new Date();
+
+document.getElementById("currentDate").textContent =
+today.toISOString().substring(0,10);
+
+/* Start Date Rules */
+
+let minDate = new Date();
+
+minDate.setDate(minDate.getDate()+7);
+
+document.getElementById("targetStartDate").min =
+minDate.toISOString().substring(0,10);
+
+/* Date field in the signature */
+document.querySelectorAll(".today-date").forEach(field => {
+field.value = new Date().toISOString().split("T")[0];
+});
+
+/* Delivery Date = Start Date + 14 Days */
+
+document
+.getElementById("targetStartDate")
+.addEventListener("change",function(){
+
+let d = new Date(this.value);
+
+d.setDate(d.getDate()+14);
+
+document.getElementById(
+"expectedDeliveryDate"
+).value =
+d.toISOString().substring(0,10);
+
+});
+
+/* Quality Grade */
+
+document
+.getElementById("qualityGrade")
+.addEventListener("change",function(){
+
+document
+.getElementById("otherQualityGradeField")
+.classList.toggle(
+"hidden",
+this.value !== "Other"
+);
+
+});
+
+/* Substrate Material */
+
+document
+.getElementById("substrateMaterial")
+.addEventListener("change",function(){
+
+document
+.getElementById("otherSubstrateField")
+.classList.toggle(
+"hidden",
+this.value !== "Other"
+);
+
+});
+
+/* Wafer Diameter */
+
+document
+.getElementById("waferDiameter")
+.addEventListener("change",function(){
+
+document
+.getElementById("otherWaferDiameterField")
+.classList.toggle(
+"hidden",
+this.value !== "OTHER"
+);
+
+});
+
+/* Wafer Package */
+
+document
+.getElementById("WaferPackage")
+.addEventListener("change",function(){
+
+document
+.getElementById("otherWaferPackage")
+.classList.toggle(
+"hidden",
+this.value !== "Other"
+);
+
+});
+
+
+
+/* Signature Pad ONLY 1 signature version */
+
+/* const canvas = document.getElementById("signaturePad");
+const ctx = canvas.getContext("2d"); 
+
+let drawing=false;
+
+canvas.addEventListener("mousedown",(e)=>{
+drawing=true;
+ctx.beginPath();
+ctx.moveTo(e.offsetX,e.offsetY);
+});
+
+canvas.addEventListener("mousemove",(e)=>{
+if(!drawing)return;
+ctx.lineTo(e.offsetX,e.offsetY);
+ctx.stroke();
+});
+
+canvas.addEventListener("mouseup",()=>{
+drawing=false;
+});
+
+canvas.addEventListener("mouseleave",()=>{
+drawing=false;
+});
+
+function clearSignature(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+}*/
+
+
+/* Signature Pad 3 signature version */
+
+function setupSignaturePad(canvasId) {
+const canvas = document.getElementById(canvasId);
+const ctx = canvas.getContext("2d");
+ 
+let drawing = false;
+ 
+canvas.addEventListener("mousedown", () => {
+drawing = true;
+});
+ 
+canvas.addEventListener("mouseup", () => {
+drawing = false;
+ctx.beginPath();
+});
+ 
+canvas.addEventListener("mousemove", (e) => {
+if (!drawing) return;
+ 
+const rect = canvas.getBoundingClientRect();
+ 
+ctx.lineWidth = 2;
+ctx.lineCap = "round";
+ 
+ctx.lineTo(
+e.clientX - rect.left,
+e.clientY - rect.top
+);
+ 
+ctx.stroke();
+ 
+ctx.beginPath();
+ctx.moveTo(
+e.clientX - rect.left,
+e.clientY - rect.top
+);
+});
+}
+ 
+setupSignaturePad("signaturePad1");
+setupSignaturePad("signaturePad2");
+setupSignaturePad("signaturePad3");
+
+function clearSignature(canvasId) {
+const canvas = document.getElementById(canvasId);
+const ctx = canvas.getContext("2d");
+ 
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+/* Collect Data */
+
+function collectData(){
+
+const data={};
+
+document
+.querySelectorAll("[data-question]")
+.forEach(el=>{
+
+if(el.type==="checkbox"){
+
+data[el.dataset.question] =
+el.checked ? "Yes":"No";
+
+}
+else{
+
+data[el.dataset.question] =
+el.value;
+
+}
+
+});
+
+data["Product Manager Signature"] =
+document.getElementById("signaturePad1").toDataURL();
+ 
+data["Pre-assembly Manager Signature"] =
+document.getElementById("signaturePad2").toDataURL();
+ 
+data["General Manager Signature"] =
+document.getElementById("signaturePad3").toDataURL();
+
+return data;
+
+}
+
+/* Validation */
+
+function validateAndSubmit(){
+
+let dieX =
+parseFloat(
+document.getElementById("dieSizeX").value
+)||0;
+
+let dieY =
+parseFloat(
+document.getElementById("dieSizeY").value
+)||0;
+
+let waferDia;
+
+if(
+document.getElementById("waferDiameter").value==="OTHER"
+){
+
+waferDia=
+parseFloat(
+document.getElementById("customWaferDiameter").value
+)||0;
+
+}
+else{
+
+waferDia=
+parseFloat(
+document.getElementById("waferDiameter").value
+)||0;
+
+}
+
+if(
+waferDia>0 &&
+(
+dieX > waferDia ||
+dieY > waferDia
+)
+){
+
+alert(
+"Die size cannot exceed wafer diameter."
+);
+
+return;
+
+}
+
+alert(
+"Validation completed successfully."
+);
+
+}
+
+/* CSV Export */
+
+function downloadCSV(){
+
+const data=collectData();
+
+let csv="Question,Answer\n";
+
+for(const k in data){
+
+csv +=
+`"${k}","${data[k]}"\n`;
+
+}
+
+const blob=
+new Blob(
+[csv],
+{type:"text/csv"}
+);
+
+const a=
+document.createElement("a");
+
+a.href=
+URL.createObjectURL(blob);
+
+a.download=
+"CR_Checklist.csv";
+
+a.click();
+
+}
+
+/* JSON Export */
+
+function downloadJSON(){
+
+const data=collectData();
+
+const blob=
+new Blob(
+[
+JSON.stringify(
+data,
+null,
+2
+)
+],
+{
+type:"application/json"
+}
+);
+
+const a=
+document.createElement("a");
+
+a.href=
+URL.createObjectURL(blob);
+
+a.download=
+"CR_Checklist.json";
+
+a.click();
+
+}
+
+/* generate sample Datasheet pdf */
+async function generateDatasheet() {
+ 
+const data = collectData();
+ 
+const response = await fetch(
+"/generate-datasheet",
+{
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}
+);
+
+const blob = await response.blob();
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "datasheet.pdf";
+link.click();
+document.body.removeChild(link);
+}
+
+
+/* Select No. of Pad */
+document.getElementById("numBondPads").addEventListener("input", function () {
+ 
+const container = document.getElementById("bondPadContainer");
+container.innerHTML = "";
+ 
+const count = parseInt(this.value) || 0;
+ 
+for (let i = 1; i <= count; i++) {
+ 
+const field = document.createElement("div");
+field.className = "field";
+ 
+field.innerHTML = `
+<div style="display:flex; gap:20px; align-items:flex-start;">
+ 
+<div>
+<label>Bond Pad ${i} Function</label>
+<select class="bondPadFunction"
+data-pad="${i}"
+multiple
+size="5">
+<option value="Gate">Gate</option>
+<option value="Source">Source</option>
+<option value="Drain">Drain</option>
+<option value="Kelvin Source">Kelvin Source</option>
+<option value="Other">Other</option>
+</select>
+ 
+<div class="field hidden otherField">
+<label>Other Bond Pad ${i} Function</label>
+<input type="text">
+</div>
+</div>
+ 
+<div>
+<label>Bond Pad ${i} Material</label>
+<select class="bondPadMaterial">
+<option value="">Select</option>
+<option>AlSiCu</option>
+<option>Cu</option>
+<option>Other</option>
+</select>
+ 
+<div class="field hidden otherMaterialField">
+<label>Other Bond Pad ${i} Material</label>
+<input type="text">
+</div>
+</div>
+ 
+<div>
+<label>Bond Pad ${i} Size X (μm)</label>
+<input type="number" min="0" placeholder="Width">
+</div>
+ 
+<div>
+<label>Bond Pad ${i} Size Y (μm)</label>
+<input type="number" min="0" placeholder="Height">
+</div>
+
+<div class="field">
+<label>Pad-To-Die Edge Distance (µm)</label>
+<input
+type="number"
+min="0" style="width:250px;"
+data-question="Pad To Die Edge Distance">
+</div>
+
+<div class="field">
+<label>Bond Pad Pitch (µm)</label>
+<input
+type="number"
+min="0" style="width:160px;"
+data-question="Bond Pad Pitch">
+</div>
+
+
+</div>
+`;
+ 
+container.appendChild(field);
+}
+ 
+attachEvents();
+});
+ 
+function attachEvents() {
+ 
+document.querySelectorAll(".bondPadMaterial").forEach(select => {
+ 
+select.addEventListener("change", function () {
+ 
+const otherField = this.parentElement.querySelector(".otherMaterialField");
+ 
+if (this.value === "Other") {
+otherField.classList.remove("hidden");
+} else {
+otherField.classList.add("hidden");
+}
+});
+});
+}
+
+</script>
+
+</body>
+
+</html>
