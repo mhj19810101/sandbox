@@ -1,0 +1,8 @@
+Lead frame 0.2 mΩ
+Contacts 0.2 mΩ
+Top metal 0.2 mΩ
+Back metal 0.05 mΩ
+
+wire 
+roundup((die_x-150-1000)/0.75)
+die_y/2+8500

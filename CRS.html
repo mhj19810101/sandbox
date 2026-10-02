@@ -224,7 +224,7 @@ data-question="Lot_ID">
 <label>Revision<span class="required"> *</span></label>
 <select data-question="Revision">
 <option value="F">Generation 0</option>
-<option value="G">Generation 1</option>
+<option value="G" selected>Generation 1</option>
 <option value="H">Generation 2</option>
 <option value="I">Generation 3</option>
 </select>
@@ -341,6 +341,57 @@ ISO 14001
 </a>
  be established to ensure that Quality is built into the package design, development and processes.
 </p>
+
+
+<div class="row">
+
+<div class="field">
+
+<label>CE/UKRI RoHS certificate <span class="required">*</span></label>
+<select
+id="CEUKRIcertificate"
+data-question="CEUKRIcertificate">
+<option value="CE" selected>CE RoHS</option>
+<option value="UKRI">UKRI RoHS</option>
+<option value="no">No</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Halogen-Free certificate <span class="required">*</span></label>
+<select
+id="halogenfree"
+data-question="halogenfree">
+<option value="yes" selected>Yes</option>
+<option value="no">No</option>
+</select>
+</div>
+
+<div class="field">
+<label>Lead-Free certificate <span class="required">*</span></label>
+<select
+id="leadfree"
+data-question="leadfree">
+<option value="yes" selected>Yes</option>
+<option value="no">No</option>
+</select>
+</div>
+
+</div>
+<p style="font-size:16px; color:#555; margin-top:8px;">
+The certification requirements are intended to support production readiness reviews, qualification planning, regulatory compliance assessments, and package material selection activities. Representative sample certificates 
+<a href="#" class="cert-link" onclick="showCert('certificates/Rohs.jpg'); return false;">
+RoHS
+</a>, 
+<a href="#" class="cert-link" onclick="showCert('certificates/EMC02.jpg'); return false;">
+Lead-Free
+</a>, 
+<a href="#" class="cert-link" onclick="showCert('certificates/EMC05.jpg'); return false;">
+Halogen-Free
+</a>
+may be provided upon request.
+</p>
 </div>
 
 <!-- ================================================= -->
@@ -443,8 +494,8 @@ data-question="CWafersize">
 
 <input
 type="number"
-min="1"
-max="2000"
+min="1" value="100"
+max="2000" id="WaferThickness"
 data-question="WaferThickness">
 
 </div>
@@ -474,7 +525,7 @@ data-question="WaferBow">
 
 <div class="row">
 <div class="field">
-<label>Is wafer Electrically Tested? <span class="required">*</span></label>
+<label>Has wafer been Electrically Tested? <span class="required">*</span></label>
 <select data-question="wafertest" id="wafertest">
 <option value="">Select</option>
 <option>Yes</option>
@@ -651,10 +702,10 @@ min-width: 250px;
 </div>
 
 <div class="field">
-<label>number of bus bar</label>
+<label>number of bus bar <span class="required">*</span></label>
 <input
 type="number"
-min="0"
+min="0" value="0"
 data-question="nobusbar">
 </div>
 
@@ -663,18 +714,18 @@ data-question="nobusbar">
 <div class="row">
 
 <div class="field">
-<label>Cell Pitch (µm)</label>
+<label>Bond pad metal thickness (µm)</label>
 <input
 type="number"
-min="0"
-data-question="Cell Pitch">
+min="0" value="10"
+data-question="metal_thickness">
 </div>
 
 <div class="field">
 <label>Minimum Pad-To-Die Edge Distance (µm)</label>
 <input
 type="number"
-min="0"
+min="0" value="250"
 data-question="Minimum Pad To Die Edge Distance">
 </div>
 
@@ -1052,7 +1103,7 @@ data-question="I_rate">
 <label>Typical on-state resistance (mohm)</label>
 <input
 type="number"
-min="0"
+min="0" value="50"
 data-question="Rdson_typ">
 
 </div>
@@ -1185,11 +1236,12 @@ data-question="Temperature_package">
 <select data-question="Package_type">
 
 <option value="TO220">TO220</option>
-<option value="TO247">TO247</option>
+<option value="TO247" selected>TO247</option>
+<option value="TO247-4L" selected>TO247-4L</option>
 <option value="DPAK">DPAK</option>
 <option value="D2PAK">D2PAK</option>
 <option value="SO8">Power SO8</option>
-<option value="QFN">Power QFN / LFPAK</option>
+<option value="QFN">Power QFN</option>
 <option>Custom</option>
 <option>Other</option>
 
@@ -1737,6 +1789,44 @@ supplied technical information.
 
 <script>
 
+/* coarse R_source_package calculation */
+function calculateBondWireResistance() {
+
+const dieX = parseFloat(document.getElementById("Die_X").value) || 2000;
+const dieY = parseFloat(document.getElementById("Die_Y").value) || 2000;
+const WaferThick = parseFloat(document.getElementById("WaferThickness").value) || 100;
+const wiredia = 380
+
+return ((26500 * (((dieY / 2) + 8500) * 1e-6) /
+(Math.PI * Math.pow(wiredia / 2, 2)) / Math.ceil((dieX - 1150) / 750))
++ 15000* (WaferThick-10) / (dieY * dieX) + 0.65).toFixed(3);
+}
+/* end of coarse R_source_package calculation */
+
+/* Rdson18 calculation */
+function calculateRdson(Rdson) {
+const Rpackage = parseFloat(calculateBondWireResistance());
+return Math.ceil((Rdson - Rpackage) * 0.793103 + Rpackage);
+}
+/* end of Rdson18 calculation */
+
+/* update revision data into datasheet */
+function getRevisionText() {
+
+const revision =
+document.querySelector('[data-question="Revision"]').value;
+
+const revisionMap = {
+"F": "Generation 0",
+"G": "Generation 1",
+"H": "Generation 2",
+"I": "Generation 3"
+};
+
+return revisionMap[revision] || revision;
+}
+/* end of update revision data into datasheet */
+
 /* pop up certificate image */
 function showCert(imagePath) {
 
@@ -1748,6 +1838,29 @@ function closeCert() {
 document.getElementById("certModal").style.display = "none";
 }
 
+/* Package Type onto datasheet */
+function getPackageType() {
+
+const packageType =
+document.querySelector(
+'[data-question="Package_type"]'
+).value;
+
+if (
+packageType === "Custom" ||
+packageType === "Other"
+) {
+
+const custom =
+document.querySelector(
+'[data-question="Custom_Package_Type"]'
+).value;
+
+return custom || packageType;
+}
+
+return packageType;
+}
 
 /* Current Date */
 
@@ -1922,7 +2035,7 @@ document.querySelector('[data-question="gatepad"]')?.value || "E";
 const backside = "S";
 const frontside = "A";
 const revision =
-document.querySelector('[data-question="Revision"]')?.value || "F";
+document.querySelector('[data-question="Revision"]')?.value || "G";
 const productName =
 `${manufacturer}${waferPackage}${rdson}${deviceType}${voltage}${gatePad}${backside}${frontside}${revision}`;
 
@@ -2019,6 +2132,13 @@ data["Product_Name"] = generateProductName();
 data["DPW"] = calculateDPW();
 data["Estimated_Cost_GBP"] = calculateProjectPrice();
 data["Device_Description"] = generateDeviceDescription();
+data["Revision_Text"] = getRevisionText();
+data["Package_Type_Text"] = getPackageType();
+
+const RdsonTyp18 = calculateRdson( parseFloat( document.querySelector('[data-question="Rdson_typ"]').value));
+const RdsonMax18 = calculateRdson( parseFloat( document.querySelector('[data-question="Rdson_max"]').value));
+data["Rdson_t18"] = RdsonTyp18;
+data["Rdson_m18"] = RdsonMax18;
 
 document
 .querySelectorAll("[data-question]")
@@ -2284,8 +2404,11 @@ const blob = await response.blob();
 const link = document.createElement("a");
 link.href = URL.createObjectURL(blob);
 link.download = (data.Product_Name || "datasheet") + ".docx";
+
+document.body.appendChild(link);
 link.click();
 document.body.removeChild(link);
+URL.revokeObjectURL(link.href);
 }
 
 
