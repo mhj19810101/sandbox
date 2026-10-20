@@ -19,7 +19,7 @@ def certificates(filename):
 def generate_datasheet():
     data = request.json
     product_name = data.get("Product_Name", "NSSF080CM1K2ESAF")
-
+   
 # Save JSON record
     json_filename = os.path.join(RECORD_FOLDER,f"{product_name}.json")
     with open(json_filename, "w", encoding="utf-8") as f:
@@ -34,5 +34,19 @@ def generate_datasheet():
 
     return send_file(docx_filename,as_attachment=True,download_name=f"{product_name}.docx")
 
+@app.route("/generate-qr", methods=["POST"])
+def generate_qreport():
+    data = request.json
+    product_name = data.get("Product_Name", "NSSF080CM1K2ESAF")
+     
+# Save qr_docx record
+    doc = DocxTemplate("qr_template.docx")
+    context = data
+    doc.render(context)
+    docx_filename = os.path.join(RECORD_FOLDER,f"{product_name}_qr.docx")
+    doc.save(docx_filename)
+ 
+    return send_file(docx_filename,as_attachment=True,download_name=f"{product_name}_qr.docx")
+    
 if __name__ == "__main__":
     app.run(debug=True)
